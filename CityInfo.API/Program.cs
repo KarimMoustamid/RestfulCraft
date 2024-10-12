@@ -9,14 +9,20 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+//
+// app.UseHttpsRedirection();
+// app.UseAuthorization();
+// app.MapControllers();
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+// Middleware to handle all incoming requests and respond with "Hello World!"
+app.Run(async (context) =>
+{
+    await context.Response.WriteAsync("Hello World!");
+});
 
 app.Run();
