@@ -15,14 +15,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
-// app.UseAuthorization();
-// app.MapControllers();
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+// app.UseEndpoints(endpoint => endpoint.MapControllers());
+app.MapControllers();
 
 // Middleware to handle all incoming requests and respond with "Hello World!"
-app.Run(async (context) =>
-{
-    await context.Response.WriteAsync("Hello World!");
-});
+// app.Run(async (context) =>
+// {
+//     await context.Response.WriteAsync("Hello World!");
+// });
 
 app.Run();
