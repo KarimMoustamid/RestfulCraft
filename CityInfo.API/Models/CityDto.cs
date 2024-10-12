@@ -7,5 +7,9 @@ namespace CityInfo.API.Models
         public string Name { get; set; }
 
         public string? Description { get; set; }
+
+        public int NumberPointOfInterests => PointOfInterests.Count;
+
+        public ICollection<PointOfInterestDto> PointOfInterests { get; set; } = new List<PointOfInterestDto>();
     }
 }
