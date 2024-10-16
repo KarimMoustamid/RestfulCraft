@@ -41,33 +41,71 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId , PointOfInterestCreationDto pointOfInterestToBeCreated)
+        public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId, PointOfInterestCreationDto pointOfInterestToBeCreated)
         {
             if (!ModelState.IsValid)
             {
-               return this.BadRequest();
+                return this.BadRequest();
             }
 
-           // if city is null
-           var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            // if city is null
+            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
-           if (city is null)
-           {
-               return this.NotFound();
-           }
+            if (city is null)
+            {
+                return this.NotFound();
+            }
 
-           // to be improved :
-           var maxPointOfInterestId = city.PointOfInterests.Max(p => p.Id);
+            // to be improved :
+            var maxPointOfInterestId = city.PointOfInterests.Max(p => p.Id);
 
-           var finalPointOfInterest = new PointOfInterestDto()
-           {
-              Id = ++maxPointOfInterestId,
-              Name = pointOfInterestToBeCreated.Name,
-              Description = pointOfInterestToBeCreated.Description,
-           };
+            var finalPointOfInterest = new PointOfInterestDto()
+            {
+                Id = ++maxPointOfInterestId,
+                Name = pointOfInterestToBeCreated.Name,
+                Description = pointOfInterestToBeCreated.Description,
+            };
 
-           return CreatedAtRoute("GetPointOfInterest", new {
-               cityId,pointOfInterestId = finalPointOfInterest.Id }, finalPointOfInterest);
+            return CreatedAtRoute("GetPointOfInterest",
+                new
+                {
+                    cityId, pointOfInterestId = finalPointOfInterest.Id
+                },
+                finalPointOfInterest);
+        }
+
+        [HttpPut("{pointOfInterestId}")]
+        public ActionResult<PointOfInterestDto> UpdatePointOfInterest(int cityId, int pointOfInterestId, [FromBody] PointOfInterestUpdateDto pointOfInterestDataToBeUpdated)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+
+            if (city is null)
+            {
+                return this.NotFound();
+            }
+
+            var pointOfInterest = city.PointOfInterests.FirstOrDefault(p => p.Id == pointOfInterestId);
+
+
+            if (pointOfInterest is null)
+            {
+                return this.NotFound();
+            }
+
+            var updatedPointOfInterest = new PointOfInterestDto
+            {
+                Id = pointOfInterestId,
+                Name = pointOfInterestDataToBeUpdated.Name,
+                Description = pointOfInterestDataToBeUpdated.Description
+            };
+
+            return this.Ok(updatedPointOfInterest);
+            // return this.NoContent();
         }
     }
 }
