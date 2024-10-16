@@ -145,10 +145,38 @@ namespace CityInfo.API.Controllers
                 return this.BadRequest(ModelState);
             }
 
+            // Validate the patched model
+            if (!TryValidateModel(pointOfInterestToPatch))
+            {
+                return this.BadRequest(ModelState);
+            }
+
             // Persisting the changes to the data store
             pointOfInterestFromStore.Name = pointOfInterestToPatch.Name;
             pointOfInterestFromStore.Description = pointOfInterestToPatch.Description;
 
+            return this.NoContent();
+        }
+
+        [HttpDelete("{pointOfInterestId}")]
+        public ActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
+        {
+            // if city is null
+            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+
+            if (city is null)
+            {
+                return this.NotFound();
+            }
+
+            var pointOfIntrestToDelete = city.PointOfInterests.FirstOrDefault(p => p.Id == pointOfInterestId);
+
+            if (pointOfIntrestToDelete is null)
+            {
+                return this.NotFound();
+            }
+
+            city.PointOfInterests.Remove(pointOfIntrestToDelete);
             return this.NoContent();
         }
     }
