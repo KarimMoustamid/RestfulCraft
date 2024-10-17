@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QhOO8H/7Py4=",
+  "dgSpecHash": "/r9KGc2p7Dc=",
   "success": true,
-  "projectFilePath": "/Users/karimmoustamid/Desktop/Code/01-Study/02-WebApi/CityInfo.API/CityInfo.API.csproj",
+  "projectFilePath": "/Users/karimmoustamid/Desktop/RestfulCraft/CityInfo.API/CityInfo.API.csproj",
   "expectedPackageFiles": [
     "/Users/karimmoustamid/.nuget/packages/microsoft.aspnetcore.jsonpatch/9.0.0-rc.2.24474.3/microsoft.aspnetcore.jsonpatch.9.0.0-rc.2.24474.3.nupkg.sha512",
     "/Users/karimmoustamid/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/8.0.10/microsoft.aspnetcore.mvc.newtonsoftjson.8.0.10.nupkg.sha512",
