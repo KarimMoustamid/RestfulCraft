@@ -1,7 +1,9 @@
 # RestfulCraft
 # ASP.NET Core API Development Path
 
-This repository is a comprehensive guide for learning how to build secure, robust, and high-performing APIs using the ASP.NET Core framework. APIs are essential for data exchange between mobile apps, desktop applications, and modern web frameworks like Angular, React, and Blazor. This path walks through the entire process of API development, from understanding the fundamentals to mastering advanced topics.
+This repository is a comprehensive guide for learning how to build secure, robust, and high-performing APIs using the ASP.NET Core framework. 
+APIs are essential for data exchange between mobile apps, desktop applications, and modern web frameworks like Angular, React, and Blazor. 
+This path walks through the entire process of API development, from understanding the fundamentals to mastering advanced topics.
 
 ## Key Topics Covered:
 - **REST Concepts & Fundamentals**: Learn the principles behind RESTful services and how they form the backbone of modern API development.
