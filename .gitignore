@@ -1,0 +1,44 @@
+
+# Build artifacts
+bin/
+obj/
+
+# Visual Studio files
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Resharper files
+*.DotSettings.user
+
+# Dependency directories
+packages/
+.nuget/
+*.nupkg
+
+# Logs
+*.log
+
+# Application insights
+ApplicationInsights.config
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Configuration files
+appsettings*.json secrets.json
+
+# Publish outputs
+wwwroot/
+publish/
+
+# Rider project files
+.idea/
+*.iml
+
+# Temp files
+*.tmp
