@@ -1,11 +1,19 @@
 using CarvedRock.Domain.Models;
 
 namespace CarvedRock.Domain;
+using Microsoft.Extensions.Logging;
 
 public class ProductLogic : IProductLogic
 {
+    private readonly ILogger<ProductLogic> _logger;
+
+    public ProductLogic(ILogger<ProductLogic> logger)
+    {
+        _logger = logger;
+    }
     public Task<IEnumerable<ProductModel>> GetProductsForCategory(string category)
     {
+        _logger.LogInformation("Fetching products for category: {category}", category);
         return Task.FromResult(GetAllProducts().Where(a =>
                string.Equals("all", category, StringComparison.InvariantCultureIgnoreCase) ||
                string.Equals(category, a.Category, StringComparison.InvariantCultureIgnoreCase)));
