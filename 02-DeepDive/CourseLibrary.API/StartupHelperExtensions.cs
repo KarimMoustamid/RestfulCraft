@@ -1,25 +1,27 @@
-﻿using System.Net.Mime;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Net.Mime;
 using System;
 using CourseLibrary.API.DbContexts;
 using CourseLibrary.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseLibrary.API;
-
 internal static class StartupHelperExtensions
 {
     // Add services to the container
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(configure =>
+            {
+                configure.ReturnHttpNotAcceptable = true;
+            }
+        ).AddXmlDataContractSerializerFormatters();
 
         builder.Services.AddScoped<ICourseLibraryRepository,
             CourseLibraryRepository>();
 
-        builder.Services.AddDbContext<CourseLibraryContext>(options =>
-        {
-            options.UseSqlite(@"Data Source=library.db");
-        });
+        builder.Services.AddDbContext<CourseLibraryContext>(options => { options.UseSqlite(@"Data Source=library.db"); });
 
         builder.Services.AddAutoMapper(
             AppDomain.CurrentDomain.GetAssemblies());
@@ -33,7 +35,8 @@ internal static class StartupHelperExtensions
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-        }else
+        }
+        else
         {
             app.UseExceptionHandler(appBuilder =>
             {
