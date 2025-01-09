@@ -14,6 +14,7 @@ namespace MyFirstApi.Controllers
         public PostsController()
         {
             // The PostsController depends on the PostsService, and the PostsService is a dependency of the PostsController.
+            // We can improve this implementation by creating a constructor injection. i.e. Dependency Inversion Principle.
             _postsService = new PostsService();
         }
 
