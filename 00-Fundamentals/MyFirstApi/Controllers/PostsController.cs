@@ -2,7 +2,7 @@ namespace MyFirstApi.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Models;
-      using System.Linq;
+    using System.Linq;
     using Services;
 
     [ApiController]
@@ -24,6 +24,7 @@ namespace MyFirstApi.Controllers
             {
                 return this.NoContent();
             }
+
             return this.Ok(posts);
         }
 
@@ -61,6 +62,20 @@ namespace MyFirstApi.Controllers
             }
 
             return Ok(item);
+        }
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            var post = await _postsService.GetPost(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            await _postsService.DeletePost(id);
+            return NoContent();
         }
     }
 }
