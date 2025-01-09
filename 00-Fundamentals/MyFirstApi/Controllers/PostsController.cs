@@ -2,6 +2,7 @@ namespace MyFirstApi.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Models;
+      using System.Linq;
     using Services;
 
     [ApiController]
@@ -16,32 +17,14 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Post>> GetPosts()
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-            return new List<Post>
+            var posts = await _postsService.GetAllPosts(); // Await the task to get the result
+            if (posts == null || posts.Any())
             {
-                new Post
-                {
-                    Id = 1,
-                    UserId = 1,
-                    Title = "Post 1",
-                    Body = "Post 1 body"
-                },
-                new Post
-                {
-                    Id = 2,
-                    UserId = 1,
-                    Title = "Post 2",
-                    Body = "Post 2 body"
-                },
-                new Post
-                {
-                    Id = 3,
-                    UserId = 2,
-                    Title = "Post 3",
-                    Body = "Post 3 body"
-                },
-            };
+                return this.NoContent();
+            }
+            return this.Ok(posts);
         }
 
         [HttpGet("{id:int}")]
