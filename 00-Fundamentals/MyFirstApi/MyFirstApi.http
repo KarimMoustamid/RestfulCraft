@@ -4,3 +4,8 @@ GET {{MyFirstApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{MyFirstApi_HostAddress}}/Lifetime
+Accept: application/json
+
+###

@@ -5,28 +5,30 @@ namespace MyFirstApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class LifetimeController : ControllerBase
+    public class LifetimeController(
+        ITransientService _transientService,
+        IScoredService _scoredService,
+        ISingletonService _singletonService) : ControllerBase
     {
-        private readonly ITransientService _transientService;
-        private readonly IScoredService _scoredService;
-        private readonly ISingletonService _singletonService;
-
-        public LifetimeController(ITransientService transientService, IScoredService scoredService, ISingletonService singletonService)
-        {
-            _transientService = transientService;
-            _scoredService = scoredService;
-            _singletonService = singletonService;
-        }
-
+        // Additional methods and members can still be defined here
         [HttpGet]
         public ActionResult<string> Get()
         {
-            // NOTE : I  need a tool to log the lifetime of the services
+            // NOTE : Use HttpRepl
             var scopedServiceMessage = _scoredService.SayHello();
             var singletonServiceMessage = _singletonService.SayHello();
             var transientServiceMessage = _transientService.SayHello();
 
             return Content($"{scopedServiceMessage}\n{singletonServiceMessage}\n{transientServiceMessage}");
         }
+
+        [HttpGet("action-injection")]
+        public ActionResult<string> GetActionInjection([FromServices] ITransientService transientService)
+        {
+            var transientServiceMessage = _transientService.SayHello();
+
+            return Content($"{transientServiceMessage}");
+        }
+
     }
 }

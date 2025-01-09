@@ -7,12 +7,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IPostService, PostsService>();
-builder.Services.AddScoped<ISingletonService, SingletonService>();
-builder.Services.AddScoped<IScoredService, ScopedService>();
-builder.Services.AddScoped<ITransientService, TransientService>();
+// Group registration
+builder.Services.AddLifetimeServices();
 
 var app = builder.Build();
+
+using (var serviceScope = app.Services.CreateScope())
+{
+    var service = serviceScope.ServiceProvider;
+    var demoService = service.GetRequiredService<IDemoService>();
+    var message = demoService.SayHello();
+    Console.WriteLine(message);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
