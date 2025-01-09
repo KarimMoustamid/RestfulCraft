@@ -8,7 +8,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPostService, PostsService>();
-builder.Services.AddSingleton<IDemoService, DemoService>();
+builder.Services.AddScoped<ISingletonService, SingletonService>();
+builder.Services.AddScoped<IScoredService, ScopedService>();
+builder.Services.AddScoped<ITransientService, TransientService>();
 
 var app = builder.Build();
 
