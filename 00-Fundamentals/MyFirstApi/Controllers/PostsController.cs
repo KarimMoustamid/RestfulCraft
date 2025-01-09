@@ -13,6 +13,7 @@ namespace MyFirstApi.Controllers
 
         public PostsController()
         {
+            // The PostsController depends on the PostsService, and the PostsService is a dependency of the PostsController.
             _postsService = new PostsService();
         }
 
