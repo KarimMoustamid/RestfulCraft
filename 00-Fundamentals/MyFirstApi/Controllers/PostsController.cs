@@ -9,13 +9,11 @@ namespace MyFirstApi.Controllers
     [Route("api/posts")]
     public class PostsController : ControllerBase
     {
-        private readonly PostsService _postsService;
+        private readonly IPostService _postsService;
 
-        public PostsController()
+        public PostsController(IPostService postsService)
         {
-            // The PostsController depends on the PostsService, and the PostsService is a dependency of the PostsController.
-            // We can improve this implementation by creating a constructor injection. i.e. Dependency Inversion Principle.
-            _postsService = new PostsService();
+            _postsService = postsService;
         }
 
         [HttpGet]
