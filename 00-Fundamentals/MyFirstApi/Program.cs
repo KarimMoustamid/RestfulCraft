@@ -7,8 +7,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Group registration
+
+// NOTE : Group registration
 builder.Services.AddLifetimeServices();
+
+// Configure routing with lowercase URLs
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
 
@@ -31,6 +35,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
+/*
+ This line of code adds endpoints for controller actions to the IEndpointRouteBuilder instance without specifying any routes. To specify the routes, we need to use the [Route] attribute on the controller class and the action methods.
+ */
 app.MapControllers();
 
 app.Run();
