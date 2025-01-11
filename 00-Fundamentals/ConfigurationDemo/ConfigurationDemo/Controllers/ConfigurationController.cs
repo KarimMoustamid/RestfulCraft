@@ -1,6 +1,7 @@
 namespace ConfigurationDemo.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
     using Options;
 
     [ApiController]
@@ -50,6 +51,18 @@ namespace ConfigurationDemo.Controllers
         {
             var databaseOptions = configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>();
 
+            return this.Ok(new
+            {
+                databaseOptions.Type,
+                databaseOptions.ConnectionString
+            });
+        }
+
+        [HttpGet]
+        [Route("database-configuration-with-ioptions")]
+        public ActionResult GetDatabaseConfigurationWithIOptions([FromServices] IOptions<DatabaseOptions> options)
+        {
+            var databaseOptions = options.Value;
             return this.Ok(new
             {
                 databaseOptions.Type,
