@@ -43,5 +43,18 @@ namespace ConfigurationDemo.Controllers
                 databaseOptions.ConnectionString
             });
         }
+
+        [HttpGet]
+        [Route("database-configuration-with-generic-type")]
+        public ActionResult GetDatabaseConfigurationWithGenericType()
+        {
+            var databaseOptions = configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>();
+
+            return this.Ok(new
+            {
+                databaseOptions.Type,
+                databaseOptions.ConnectionString
+            });
+        }
     }
 }
