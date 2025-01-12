@@ -8,7 +8,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // IOptions<TOption> Pattern :
-builder.Services.Configure<DatabaseOption>(builder.Configuration.GetSection(DatabaseOption.SectionName));
+// builder.Services.Configure<DatabaseOption>(builder.Configuration.GetSection(DatabaseOption.SectionName));
+// Using named options
+builder.Services.Configure<DatabaseOptions>(DatabaseOptions.SystemDatabaseSectionName,
+    builder.Configuration.GetSection($"{DatabaseOptions.SectionName}:{DatabaseOptions.SystemDatabaseSectionName}"));
+
+builder.Services.Configure<DatabaseOptions>(DatabaseOptions.BusinessDatabaseSectionName,
+    builder.Configuration.GetSection($"{DatabaseOptions.SectionName}:{DatabaseOptions.BusinessDatabaseSectionName}"));
+
 
 var app = builder.Build();
 

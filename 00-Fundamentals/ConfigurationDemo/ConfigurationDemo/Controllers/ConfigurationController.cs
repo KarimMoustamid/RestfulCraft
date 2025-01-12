@@ -85,5 +85,14 @@ namespace ConfigurationDemo.Controllers
             var databaseOption = options.CurrentValue;
             return Ok(new { databaseOption.Type, databaseOption.ConnectionString });
         }
+
+        [HttpGet]
+        [Route("database-configuration-with-named-options")]
+        public ActionResult GetDatabaseConfigurationWithNamedOptions([FromServices] IOptionsSnapshot<DatabaseOptions> options)
+        {
+            var systemDatabaseOption = options.Get(DatabaseOptions.SystemDatabaseSectionName);
+            var businessDatabaseOption = options.Get(DatabaseOptions.BusinessDatabaseSectionName);
+            return Ok(new { SystemDatabaseOption = systemDatabaseOption, BusinessDatabaseOption = businessDatabaseOption });
+        }
     }
 }
