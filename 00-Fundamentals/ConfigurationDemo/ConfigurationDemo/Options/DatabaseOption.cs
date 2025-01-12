@@ -1,6 +1,6 @@
 namespace ConfigurationDemo.Options
 {
-    public class DatabaseOptions
+    public class DatabaseOption
     {
         public const string SectionName = "Database";
         public string Type { get; set; } = string.Empty;

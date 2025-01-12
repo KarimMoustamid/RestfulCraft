@@ -33,10 +33,10 @@ namespace ConfigurationDemo.Controllers
         [Route("database-configuration-with-bind")]
         public ActionResult GetDatabaseConfigurationWithBind()
         {
-            var databaseOptions = new DatabaseOptions();
+            var databaseOptions = new DatabaseOption();
 
             //The `SectionName` is defined in the `DatabaseOption` class, which shows the section name in the `appsettings.json` file.
-            configuration.GetSection(DatabaseOptions.SectionName).Bind(databaseOptions);
+            configuration.GetSection(DatabaseOption.SectionName).Bind(databaseOptions);
 
             return this.Ok(new
             {
@@ -49,7 +49,7 @@ namespace ConfigurationDemo.Controllers
         [Route("database-configuration-with-generic-type")]
         public ActionResult GetDatabaseConfigurationWithGenericType()
         {
-            var databaseOptions = configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>();
+            var databaseOptions = configuration.GetSection(DatabaseOption.SectionName).Get<DatabaseOption>();
 
             return this.Ok(new
             {
@@ -60,7 +60,7 @@ namespace ConfigurationDemo.Controllers
 
         [HttpGet]
         [Route("database-configuration-with-ioptions")]
-        public ActionResult GetDatabaseConfigurationWithIOptions([FromServices] IOptions<DatabaseOptions> options)
+        public ActionResult GetDatabaseConfigurationWithIOptions([FromServices] IOptions<DatabaseOption> options)
         {
             var databaseOptions = options.Value;
             return this.Ok(new
@@ -68,6 +68,22 @@ namespace ConfigurationDemo.Controllers
                 databaseOptions.Type,
                 databaseOptions.ConnectionString
             });
+        }
+
+        [HttpGet]
+        [Route("database-configuration-with-ioptions-snapshot")]
+        public ActionResult GetDatabaseConfigurationWithIOptionsSnapshot([FromServices] IOptionsSnapshot<DatabaseOption> options)
+        {
+            var databaseOption = options.Value;
+            return Ok(new { databaseOption.Type, databaseOption.ConnectionString });
+        }
+
+        [HttpGet]
+        [Route("database-configuration-with-ioptions-monitor")]
+        public ActionResult GetDatabaseConfigurationWithIOptionsMonitor([FromServices] IOptionsMonitor<DatabaseOption> options)
+        {
+            var databaseOption = options.CurrentValue;
+            return Ok(new { databaseOption.Type, databaseOption.ConnectionString });
         }
     }
 }
